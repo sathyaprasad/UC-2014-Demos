@@ -16,6 +16,7 @@
  var canTalk = false;
  var isRecognitionStarted = false;
  var logoClicked = false;
+ var gyroEnabled = true;
 
 // default web maps in case user's groups don't return anything
  var webmapgallery = ['d94dcdbe78e141c2b2d3a91d5ca8b9c9', '4778fee6371d4e83a22786029f30c7e1', 'c63cdcbbba034b62a2f3becac021b0a8', 'ef5920f160bd4239bdeb1348de3a3156',
@@ -64,6 +65,7 @@
                 dojo.byId('help-prompts').style.display = 'none';
                 recognition.stop();
                 isRecognitionStarted = false;
+                gyroEnabled = true;
             }
             else {
                 dojo.byId('help-text-text').innerHTML = 'Say a command';
@@ -71,8 +73,9 @@
                 dojo.byId('help-prompts').style.display = 'block';          
                 if(!isRecognitionStarted) {
                     recognition.start();
-                    isRecognitionStarted = true;
+                    isRecognitionStarted = true;                    
                 }
+                gyroEnabled =  false;
             }            
             canTalk = !canTalk;
         });
@@ -379,6 +382,9 @@
 
 
  function onDeviceOrientationChanged(event) {
+    if(!gyroEnabled) {
+        return;
+    }
     // on my device, beta was off by a whopping 9 degrees -- this accounts for that.
     var beta = event.beta + 9;
 
