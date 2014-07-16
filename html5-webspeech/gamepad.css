@@ -20,7 +20,6 @@ body {
 
 table {
 	color: #fff !important;
-	font-size: 24px;
 }
 
 .esriLegendLayerLabel, .esriLegendLayer {
@@ -113,89 +112,97 @@ table {
 }
 
 #connect-status {
-	height: 100%;
 	position: absolute;
 	top: 0px;
 	right: 0px;
+	padding: 4px 23px;
 	z-index: 100;
 }
 
+#microphone {
+	height: 64px;
+}
+
 #help-text {
-	display: none;
+	display: inline-block;
+	height: 100%;
+	min-width: 200px;
+	padding: 0px 20px;
 	position: absolute;
-	right: 78px;
-	top: 19px;
-	font-size: 24px;
-}
-
-#description-container {
-	display: none;
-	width: 100%;
-	color: white;
-	position: absolute;
-	background: rgba(0,0,0,0.7);
-	top: 71px;
-	z-index: 200;
-	padding: 20px;
-}
-
-#description {
+	right: 82px;
 	font-size: 20px;
 }
 
-#description a {
-	text-decoration: none;
-	color: white;
+#help-text-text {
+	margin-top: 18px;
+	text-align: center;
+	font-size: 28px;
 }
-
 
 #legend-div {
 	background: rgba(0,0,0,0.7);
 	display: none;
 	font-size: 28px;
 	min-height: 200px;
-	max-height: 70%;	
-	min-width: 15%;
-	max-width: 25%;
+	max-height: 60%;	
+	min-width: 250px;
+	max-width: 400px;
 	overflow-y: auto;
 	position: absolute !important;
 	right: 0px;
-	top: 20%;
+	bottom: 27%;
 	padding: 20px;
-	border-radius: 5px 0px 0px 5px;
+	border-radius: 5px;
 	color: #fff !important;
 	z-index: 200;
 }
 
-#help-pics {
-	display: none;
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
+#help-prompts {
 	background: rgba(0,0,0,0.8);
+	bottom: 0px;
+	color: white;
+	font-size: 24px;
+	padding-right: 20px;
+	position: absolute;
+	right: 0px;	
 	width: 100%;
 	z-index: 100;
 }
 
-#help-pics img {
-	width: 49%;
+#help-prompts div {
+	display: inline-block;
+	width: 32%;
 }
 
-#close-help {
-	color: white;
-	cursor: pointer;
-	font-weight: bold;
-	font-size: 24px;
-	position: absolute;
-	right: 5px;
+#help-prompts ul {
+	display: inline-block;
+	list-style-type: none;
 }
 
-.connected {
+#help-prompts ul.description {
+	color: #CCC;
+}
+
+.connected, .valid-command {
 	background-color: rgb(43, 187, 89);
 }
 
-.disconnected {
+.disconnected, .invalid-command {
 	background-color: rgb(230, 100, 100);
+}
+
+#no-microphone {
+	display:none;
+}
+
+#orientation {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	height: 200px;
+	width: 300px;
+	background: black;
+	color: white;
 }
 
 @media all and (min-width: 2000px) {
@@ -222,14 +229,24 @@ table {
 
 	#help-text {
 		font-size: 30px;
-		top: 29px;
 		right: 110px;
 	}
 
+	#help-text-text {
+		margin: 32px 0 28px;
+		font-size: 30px;
+	}
+
+	#connect-status {
+		padding: 5px 30px;
+	}
+
 	#connect-status img {
-		content: url('controller128.png');
-		margin-top: 4px;
-		width: 91px;
+		height: 91px;
+	}
+
+	#help-prompts {
+		font-size: 26px;
 	}
 }
 
@@ -255,21 +272,29 @@ table {
 		font-size: 26px;
 	}
 
-	#connect-status img {
-		height: 60px;
-	}
-
 	#help-text {
-		font-size: 20px;
-		top: 17px;
+		right: 69px;
 	}
 
-	#description-container {
-		top: 60px;
+	#connect-status {
+		padding: 4px 20px;
+	}
+
+	#connect-status img {
+		height: 52px;
+	}
+
+	#help-text-text {
+		margin: 13px 0px;
+		font-size: 26px;
 	}
 
 	#legend-div {
 		max-width: 33%;
+	}
+
+	#help-prompts {
+		font-size: 22px;
 	}
 }
 
@@ -295,29 +320,37 @@ table {
 		font-size: 26px;
 	}
 
-	#connect-status img {
-		height: 55px;
-	}
-
 	#help-text {
-		font-size: 20px;
-		position: absolute;
-		right: 0px;
-		top: 55px;
-		background: rgba(0,0,0,0.6);
-		padding: 7px 10px;
+		right: 62px;
 	}
 
-	#description-container {
-		top: 55px;
+	#help-text-text {
+		margin: 11px 0px;
+		font-size: 24px; 
+	}
+
+	#connect-status {
+		padding: 3px 17px;
+	}
+
+	#connect-status img {
+		height: 49px;
 	}
 
 	#legend-div {
 		max-width: 40%;
 	}
+
+	#help-prompts {
+		font-size: 18px;
+	}
+
+	#help-prompts ul {
+		padding-left: 15px;
+	}
 }
 
-@media all and (min-width: 600px) and (max-width: 905px) {
+@media all and (min-width: 700px) and (max-width: 905px) {
 	#logo {
 		height: 45px;
 	}
@@ -332,24 +365,24 @@ table {
 	}
 
 	#title h3{
-		font-size: 24px;
-	}
-
-	#connect-status img {
-		height: 45px;
-	}
-
-	#description-container {
-		top: 45px;
+		font-size: 22px;
 	}
 
 	#help-text {
-		font-size: 20px;
-		position: absolute;
-		right: 0px;
-		top: 45px;
-		background: rgba(0,0,0,0.6);
-		padding: 7px 10px;
+		right: 53px;
+	}
+
+	#help-text-text {
+		margin: 7px 0px;
+		font-size: 24px;
+	}
+
+	#connect-status {
+		padding: 2px 15px;
+	}
+
+	#connect-status img {
+		height: 41px;
 	}
 
 	#legend-div {
@@ -358,5 +391,158 @@ table {
 
 	table {
 		font-size: 16px;
+	}
+
+	#help-prompts {
+		font-size: 17px;
+		max-height: 66%;
+		overflow-y: scroll; 
+	}
+
+	#help-prompts div {
+		width: 48%;
+	}
+
+	#help-prompts ul {
+		padding-left: 28px;
+		margin: 20px 0px;
+	}
+}
+
+@media all and (min-width: 350px) and (max-width: 700px) {
+	#logo {
+		height: 45px;
+	}
+
+	#header {
+		height: 45px;
+	}
+
+	#title {
+		display: none;
+		position: absolute;
+		left: 0px;
+		top: 45px;
+		background: rgba(0,0,0,0.7);
+		padding: 10px 20px;
+		width: 100%;
+		text-align: center;
+		font-size: 18px;
+	}
+
+	#title h3{
+		font-size: 18px;
+	}
+
+	#help-text {
+		right: 51px;
+	}
+
+	#help-text-text {
+		margin: 10px 0px 6px;
+		font-size: 20px;
+	}
+
+	#connect-status {
+		padding: 2px 14px;
+	}
+
+	#connect-status img {
+		height: 41px;
+	}
+
+	#legend-div {
+		max-width: 45%;
+	}
+
+	table {
+		font-size: 16px;
+	}
+
+	#help-prompts {
+		font-size: 18px;
+		overflow-y: scroll; 
+		max-height: 66%
+	}
+
+	#help-prompts div {
+		width: 99%;
+	}
+
+	#help-prompts ul {
+		padding-left: 28px;
+		margin: 10px 0;
+	}
+}
+
+@media all and (max-width: 350px) {
+	#logo {
+		height: 45px;
+	}
+
+	#header {
+		height: 45px;
+	}
+
+	#title {
+		display: none;
+		position: absolute;
+		left: 0px;
+		top: 45px;
+		background: rgba(0,0,0,0.7);
+		padding: 10px 20px;
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+	}
+
+	#title h3{
+		font-size: 16px;
+	}
+
+	#help-text {
+		min-width: 0px;
+		padding: 0px 8px;
+		right: 51px;
+	}
+
+	#help-text-text {
+		margin: 10px 0px 6px;
+		font-size: 20px;
+	}
+
+	#connect-status {
+		padding: 2px 14px;
+	}
+
+	#connect-status img {
+		height: 41px;
+	}
+
+	#description-container {
+		top: 45px;
+	}
+
+	#legend-div {
+		max-width: 45%;
+	}
+
+	table {
+		font-size: 16px;
+	}
+
+	#help-prompts {
+		font-size: 18px;
+		overflow-y: scroll; 
+		max-height: 66%
+	}
+
+	#help-prompts div {
+		width: 99%;
+	}
+
+	#help-prompts ul {
+		padding-left: 28px;
+		margin: 10px 0;
 	}
 }

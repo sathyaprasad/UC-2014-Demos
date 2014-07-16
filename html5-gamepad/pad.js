@@ -1,3 +1,7 @@
+ /*
+    This code shows an example of using the HTML5 Gamepad API with the ArcGIS Javascript API. This demo works on the newest version of Chrome (I used version 35.)
+ */
+
  var hasGP = false;
  var mymap = null;
  var mapResponse = null;
@@ -9,12 +13,10 @@
  var changedOriginalText = true;
  var descriptionShown = false;
 
+// use these defaults if there is no group brought back
  var webmapgallery = ['d94dcdbe78e141c2b2d3a91d5ca8b9c9', '4778fee6371d4e83a22786029f30c7e1', 'c63cdcbbba034b62a2f3becac021b0a8', 'ef5920f160bd4239bdeb1348de3a3156',
      '8a567ebac15748d39a747649a2e86cf4', '2618187b305f4eafbae8fd6eb52afc76'
  ];
-
- //webmapgallery = [];
-
 
  var basemapTypes = ['streets', 'hybrid', 'topo', 'gray', 'oceans', 'national-geographic', 'osm'];
  var basemapIndex = 0;
@@ -24,6 +26,7 @@
  var overviewMapDijit;
  var isBusy = false;
 
+// using the dojo AMD pattern
  require([
      "dojo/ready",
      "esri/map",
@@ -50,6 +53,7 @@
           var defaultGeometryServerUrl = document.location.protocol + "//utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer";
           esri.config.defaults.geometryService = new esri.tasks.GeometryService(defaultGeometryServerUrl);
 
+          // can also get groups dynamically from the url
          var hrefObject = esri.urlToObject(document.location.href);
          if (hrefObject.query && hrefObject.query.webmap) {
              webmapid = hrefObject.query.webmap;
@@ -60,9 +64,6 @@
          }
 
          if (groupid) {
-
-             console.log("using groupid: " + groupid);
-
              var portal = new esri.arcgis.Portal('http://www.arcgis.com');
              portal.on("load", function() {
                  var params = {
@@ -101,18 +102,18 @@
 
  function loadMap(webmapid) {
      require(['dojo/_base/array'], function(arrayUtils) {
-        dojo.byId('help-text').style.display = 'inline-block';
          dojo.byId('help-text').innerHTML = 'Press \'A\' to get help.';
          if (mymap) {
              mymap.destroy();
-             //legendDijit.destroy();
+             dojo.byId('help-text').style.display = 'none';
              dojo.byId('legend-div').style.display = "none";
              basemapIndex = 0;
              bookmarkIndex = 0;
              if (overviewMapDijit) overviewMapDijit.destroy();
-             //dojo.byId('bookmarks').style.display = 'none';
              dojo.byId('help-text').innerHTML = '';
              dojo.byId("title").innerHTML = "Loading ...";
+         } else {
+            dojo.byId('help-text').style.display = 'inline-block';
          }
 
          esri.arcgis.utils.createMap(webmapid, "mapdiv").then(function(response) {
@@ -137,10 +138,8 @@
                  };
              }
 
-
              isBusy = false;
-             changedOriginalText = true;
-             //call gamepadinit
+             changedOriginalText = true;             
 
              if (legendDijit) {
                 legendDijit.layerInfos = legendLayers;
@@ -152,7 +151,6 @@
                  }, 'legend-div');
                  legendDijit.startup();
              }
-
 
              overviewMapDijit = new esri.dijit.OverviewMap({
                  map: mymap,
@@ -174,7 +172,7 @@
      });
  }
 
-
+// see if any gamepads are connected -- we're only allowing one at a time in this demo.
  function canGame() {
      return "getGamepads" in navigator;
  }
@@ -188,20 +186,16 @@
          };
  })();
 
-
-
  function initializeGamePad() {
-
      if (mymap == null) {
          alert("map is null");
          return;
      }
 
      if (hasGP) return;
-
      var timer = null;
 
-
+     // add listeners for when the gamepad is connected or disconnected
      window.addEventListener('gamepadconnected', function() {
          hasGP = true;
          dojo.byId('connect-status').className = 'connected';
@@ -224,28 +218,26 @@
              dojo.byId('connect-status').className = 'disconnected';
          }
      }, 500);
-     //requestAnimFrame(checkGamepad);
  }
 
+ // we call this function on an interval (not continuously) so we don't overload (otherwise, one button press might register as 4 or 5 presses)
  function checkGamepad() {
      // we only want one gamepad controlling the map
      var gamepad = navigator.getGamepads()[0];
-
      if (canGame()) {
          pollButtons(gamepad);
          checkAxes(gamepad);
      }
  }
 
+ // loop through the buttons periodically and if any are pressed, perform their associated action.
  function pollButtons(gamepad) {
      for (var i = 0; i < gamepad.buttons.length; i++) {
          if (gamepad.buttons[i].pressed) {
              var buttonName = '';
-
              if (i < 12) {
                  if (isButtonBusy) return;
                  isButtonBusy = true;
-
                  switch (i) {
                      case 0:
                          buttonName = "A";
@@ -346,29 +338,22 @@
  }
 
  function hasBookmarks() {
-
      // if there are any...     
      var bookmarks = mapResponse.itemInfo.itemData.bookmarks;
      if (bookmarks && bookmarks.length > 0) {
-         //overviewMapDijit.show();
-         //dojo.byId('bookmarks').style.display = "inline-block";
          var pluralSuffix = bookmarks.length > 1 ? 's' : '';
+         dojo.byId('help-text').style.display = 'inline-block';
          var bookmarkText = bookmarks.length + ' Bookmark' + pluralSuffix + ' available! Press B to get started.';
          dojo.byId('help-text').innerHTML = bookmarkText;
-     } else {
-         //dojo.byId('help-text').innerHTML = '';
-         //overviewMapDijit.hide();
      }
  }
 
  function displayBookmark() {
      var bookmarks = mapResponse.itemInfo.itemData.bookmarks;
+     dojo.byId('help-text').style.display = 'inline-block';
      if (bookmarks && bookmarks.length > 0) {
-         console.log("Changing bookmark");
          // set this to do.
          if (bookmarkIndex > bookmarks.length - 1) {
-             //dojo.byId('bookmarks').style.display = 'none';
-             //overviewMapDijit.hide();
              bookmarkIndex = 0;
              var pluralSuffix = bookmarks.length > 1 ? 's' : '';
              var bookmarkText = bookmarks.length + ' Bookmark' + pluralSuffix + ' available! Press B to get started.';
@@ -376,9 +361,6 @@
              mymap.setExtent(mymap.initialExtent);
          } else {
              // set extent
-             //console.log('showing bookmark ' + (bookmarkIndex + 1));
-             //overviewMapDijit.show();
-             //dojo.byId('bookmarks').style.display = 'inline-block';
              dojo.byId('help-text').innerHTML = "Showing Bookmark " + (bookmarkIndex + 1) + ' of ' + bookmarks.length;
              var newExtent = new esri.geometry.Extent(bookmarks[bookmarkIndex].extent);
              mymap.setExtent(newExtent, true);
@@ -491,8 +473,6 @@
 
      if (isBusy) return;
 
-     console.log(type);
-
      switch (type) {
          case 'zoomin':
              setPanZoomHelpText();
@@ -536,6 +516,9 @@
              break;
          case 'reset':
              dojo.byId('help-text').innerHTML = originalHelpText;
+             if(originalHelpText == '') {
+                dojo.byId('help-text').style.display = 'none';
+             }
              mymap.setExtent(mymap.initialExtent);
              changedOriginalText = true;
              break;
@@ -566,6 +549,7 @@
  function setPanZoomHelpText() {
      if (changedOriginalText) {
          originalHelpText = dojo.byId('help-text').innerHTML;
+         dojo.byId('help-text').style.display = 'inline-block';
          dojo.byId('help-text').innerHTML = 'Press "back" to return to original extent.';
          changedOriginalText = false;
      }
@@ -575,19 +559,3 @@
      mymap.setBasemap(basemapTypes[basemapIndex % basemapTypes.length]);
      basemapIndex++;
  }
-
- window.onload = (function() {
-
-
-     //initializeGamePad();
-
-     //https://developer.mozilla.org/en-US/docs/Web/Guide/API/Gamepad
-     /* TODO
-         window.addEventListener("gamepadconnected", function(e) {
-             console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-                 e.gamepad.index, e.gamepad.id,
-                 e.gamepad.buttons.length, e.gamepad.axes.length);
-         });
-    */
-
- });
