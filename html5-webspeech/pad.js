@@ -1,5 +1,6 @@
  /*
     Uses the HTML5 Web Speech API and Device Orientation API to manipulate maps from ArcGIS Online with the ArcGIS JavaScript API.
+	NOTE: This demo only currently works in Chrome, versions 35 and above, and not on iPhones or iPads (although it works on Android tablets). 
  */
 
  var hasGP = false;
