@@ -10,6 +10,10 @@ Few demos shown at my sessions in the Esri User Conference 2014 in San Diego.
 
 [HTML 5 Web Speech](http://sathyaprasad.github.io/UC-2014-Demos/html5-webspeech/pad.html)
 
-### ArcGIS Online and Semantic Web
+###Session: ArcGIS Online and Semantic Web
 
-### Taking your Web Maps Offline
+In the folder, you can find the presentation slides as PDF and link to video recording of the app on youtube here: http://youtu.be/QwNh-7DV8WE
+
+###Session: Taking your Web Maps Offline
+
+In the folder, yon can find the presentation slides as PDF and the GP service with the scripts to generate the tiles.
