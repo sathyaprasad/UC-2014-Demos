@@ -19,3 +19,8 @@ In the folder, you can find the presentation slides as PDF and link to video rec
 ###Session: Taking your Web Maps Offline
 
 In the folder, you can find the presentation slides as PDF and the GP service with the scripts to generate the tiles. Link to video recording of the web authoring app and the iOS custom app: https://www.youtube.com/watch?v=jhlkkW7vLMc
+
+
+###Session: Snap2Map
+
+[Learn More](https://marketplace.arcgis.com/listing.html?id=54b4a00a132b4583bd24c37d1c947e1e)
